@@ -11,7 +11,6 @@ class SnackDept extends Component {
     }
 
     render() {
-        // console.log('from snackdept component: ', this.props.data)
         return (
             <div>
                 <h1>The Snack Department</h1>
@@ -32,15 +31,21 @@ class SnackDept extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state)
     return {
-        data: state.snacks
+        data: state.snacks.snacksData
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        snackUpdate: snackUpdate
-    }, dispatch)
-}
+// const mapDispatchToProps = (dispatch) => {
+//     return bindActionCreators({
+//         snackUpdate: snackUpdate
+//     }, dispatch)
+// }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        snackUpdate: (operator, index) => dispatch(snackUpdate(operator,index))
+    }
+}
 export default connect(mapStateToProps, mapDispatchToProps)(SnackDept);

@@ -1,28 +1,33 @@
-const snacksData =[
-        {food:'Doritos', quantity: 10},
-        {food:'Jagabee', quantity: 6},
-        {food:'Haribo', quantity: 22},
-        {food:'Calbee', quantity: 12},
-        {food:'M&Ms', quantity: 2},
-    ]
+import { UPDATE_SNACKS_QUANTITY } from '../actions/snackDeptUpdate'
 
-
-const snacksReducer = (state = snacksData, action) => {
-    // console.log(action)
-    if(action.type === 'UPDATE_SNACKS'){
-        const newState = [...state]; 
-
-        if(action.payload.operator === '+'){
-            newState[action.payload.index].quantity++
-        }else if(action.payload.operator === '-'){
-            newState[action.payload.index].quantity--
-        }
-
-        return newState
-    }else{
-        return state
-    }
-
+const initState = {
+  snacksData: [
+    { food: 'Doritos', quantity: 10 },
+    { food: 'Jagabee', quantity: 6 },
+    { food: 'Haribo', quantity: 22 },
+    { food: 'Calbee', quantity: 12 },
+    { food: 'M&Ms', quantity: 2 },
+  ],
 }
 
-export default snacksReducer;
+const snacksReducer = (state = initState, { type, payload }) => {
+  switch (type) {
+    case UPDATE_SNACKS_QUANTITY:
+      const newSnackState = [...state.snacksData]
+
+      if (payload.operator === '+') {
+        newSnackState[payload.index].quantity++
+      } else if (payload.operator === '-') {
+        newSnackState[payload.index].quantity--
+      }
+      
+      return {
+        ...state,
+        snacksData: newSnackState,
+      }
+    default:
+      return state
+  }
+}
+
+export default snacksReducer
